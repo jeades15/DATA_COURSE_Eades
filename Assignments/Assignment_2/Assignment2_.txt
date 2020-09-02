@@ -1,12 +1,11 @@
-1. 
-
+1.
+wc -l ../../Data/data-shell/data/pdb/m*.pdb
 2.
-
+wc -l ../../Data/data-shell/data/pdb/m*.pdb > m_lines.txt
 3.
-
+cat ../../Data/data-shell/data/animals.txt | cut -d "," -f 2 | sort | uniq > unique_animals.txt
 4.
-
+cat ../../Data/BioLog_Plate_Data.csv | cut -d "," -f 5 | sort | uniq > unique_C-substrates.txt
 5.
-
+wc -l ../../Data/data-shell/data/*.txt | sort -n | tail -2 | head -1
 6.
-

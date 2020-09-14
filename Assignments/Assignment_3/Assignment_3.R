@@ -143,10 +143,11 @@ col3 = factor(c(1,2,3,4)) # see how we can designate something as a factor
 
 # here's the data frame command:
 data.frame(Clothes = col1, Numbers = col2, Factor_numbers = col3) # colname = vector, colname = vector....
-df1 = data.frame(Clothes = col1, Numbers = col2, Factor_numbers = col3) # assign to df1
+df1 <- data.frame(Clothes = col1, Numbers = col2, Factor_numbers = col3) # assign to df1
 df1 # look at it...note column names are what we gave it.
-
-
+df1
+dat
+iris
 
 
 # Practice subsetting ####
@@ -154,12 +155,21 @@ df1 # look at it...note column names are what we gave it.
 # Make a data frame from the first 20 rows of iris that has only Species and Sepal.Length columns
 # save it into an object called "dat3"
 
+Sepal.Length <- c(iris$Sepal.Length[1:20])
+Sepal.Length
 
+spp <- c("Species", "Sepal.Length")
+rows <- c(1:20)
+iris[rows,spp]
 
+iris[c(1:20),c("Species","Sepal.Length")]
 
+dat3 <- iris[rows,spp]
+rows
 
 # WRITING OUT FILES FROM R ####
 ?write.csv()
+write.csv(dat3,"./Eades_first_file.csv")
 
 
 # Write your new object "dat3" to a file named "LASTNAME_first_file.csv" in your PERSONAL git repository
@@ -184,21 +194,27 @@ for(i in levels(dat$Species)){
   print(mean(dat[dat$Species == i,"Sepal.Length"]))
 }
 
-
+?jpeg
 
 # YOUR REMAINING HOMEWORK ASSIGNMENT (Fill in with code) ####
 
 # 1.  Make a scatterplot of Sepal.Length vs Sepal.Width. See if you can get the points to be colored by "Species"
-
+plot(x=dat$Sepal.Width,y=dat$Sepal.Length,col=dat$Species)
 
 # 2.  Write the code to save it (with meaningful labels) as a jpeg file
-
+jpeg("./Assignment_3.jpeg")
+plot(x=dat$Sepal.Width,y=dat$Sepal.Length,col=dat$Species, main = "Sepal.Length vs. Sepal.Width", xlab = "Sepal.Width", ylab = "Sepal.Length")
+dev.off()
 
 # 3.  Subset the Iris data set to only include rows from the setosa and virginica Species
+colm <- c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species")
+rowz <- c(1:50,101:150)
+iris[rowz,colm]
 
 
 # 4.  Write code to save this new subset as a .csv file called setosa_and_virginica.csv
-
+dat4 <- iris[rowz,colm]
+write.csv(dat4, "./setosa_and_virginica.csv")
 
 # 5.  Upload this R script (with all answers filled in and tasks completed) to canvas and GitHub
       # I should be able to run your R script and get all the plots created and saved, etc.

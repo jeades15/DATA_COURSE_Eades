@@ -23,6 +23,13 @@
 letters # built-in pre-made vector of a - z
 
 
+x <- 3
+y <- 5
+x+y
+
+class(1)
+class(1L)
+class(333.3)
 
 vector1 <- c(1,2,3,4,5,6,7,8,9,10)
 vector2 <- c(5,6,7,8,4,3,2,1,3,10)
@@ -34,7 +41,7 @@ vector1*vector2
 
 vector3 + 1 # can't add 1 to "a"
 
-
+c(1,"a",2,"b")
 
 # Data Frames ####
 # R has quite a few built-in data sets
@@ -42,13 +49,14 @@ data("iris") # load it like this
 
 # For built-in data, there's often a 'help file'
 ?iris
-
+?list.files
 # "Iris" is a 'data frame.' 
 # Data frames are 2-dimensional (think Excel spreadsheet)
 # Rows and columns
 # Each row or column is a vector
 
-
+View(iris)
+?iris
 dat <- iris # can rename the object to be easier to type if you want
 
 # ways to get a peek at our data set
@@ -60,9 +68,20 @@ head(dat)
 dat$Species
 dat$Sepal.Length
 
+
 # You can also use square brackets to get specific 1-D or 2-D subsets of a data frame (rows and/or columns)
 dat[1,1] # [Rows, Columns]
 dat[1:3,5]
+dat[65,3]
+dat[1:3,4:5]
+letters[6]
+
+letters[5]
+letters[c(5,6)]
+letters[5:6]
+
+let <- c(1,3,5,7,9)
+letters[let]
 
 # Plotting ####
 
@@ -70,6 +89,7 @@ dat[1:3,5]
 plot(x=dat$Petal.Length, y=dat$Sepal.Length)
 plot(x=dat$Species, y=dat$Sepal.Length)
 
+t.test(x=dat$Sepal.Length,y=dat$Species)
 
 # Object "Classes" ####
 
@@ -87,6 +107,8 @@ str(dat)
 # Let's try
 nums <- c(1,1,2,2,2,2,3,3,3,4,4,4,4,4,4,4,5,6,7,8,9)
 class(nums) # make sure it's numeric
+length(nums)
+plot(nums)
 
 # convert to a factor
 as.factor(nums) # show in console
@@ -99,13 +121,12 @@ plot(nums_factor)
 # take note of how numeric vectors and factors behave differently in plot()
 
 # Let's modify and save these plots. Why not!?
-?plot()
+?plot
 plot(nums, main = "My Title", xlab = "My axis label", ylab = "My other axis label")
+plot(nums, main = "Nums", xlab = "X axis", ylab = "Y axis")
 
-
-?jpeg()
-
-
+jpeg("./exampleplot.jpeg")
+plot(nums, main = "Nums", xlab = "X axis", ylab = "Y axis")
 dev.off()
 
 

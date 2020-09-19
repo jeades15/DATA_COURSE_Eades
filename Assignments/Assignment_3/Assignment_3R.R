@@ -23,13 +23,6 @@
 letters # built-in pre-made vector of a - z
 
 
-x <- 3
-y <- 5
-x+y
-
-class(1)
-class(1L)
-class(333.3)
 
 vector1 <- c(1,2,3,4,5,6,7,8,9,10)
 vector2 <- c(5,6,7,8,4,3,2,1,3,10)
@@ -41,7 +34,7 @@ vector1*vector2
 
 vector3 + 1 # can't add 1 to "a"
 
-c(1,"a",2,"b")
+
 
 # Data Frames ####
 # R has quite a few built-in data sets
@@ -49,14 +42,13 @@ data("iris") # load it like this
 
 # For built-in data, there's often a 'help file'
 ?iris
-?list.files
+
 # "Iris" is a 'data frame.' 
 # Data frames are 2-dimensional (think Excel spreadsheet)
 # Rows and columns
 # Each row or column is a vector
 
-View(iris)
-?iris
+
 dat <- iris # can rename the object to be easier to type if you want
 
 # ways to get a peek at our data set
@@ -68,20 +60,9 @@ head(dat)
 dat$Species
 dat$Sepal.Length
 
-
 # You can also use square brackets to get specific 1-D or 2-D subsets of a data frame (rows and/or columns)
 dat[1,1] # [Rows, Columns]
 dat[1:3,5]
-dat[65,3]
-dat[1:3,4:5]
-letters[6]
-
-letters[5]
-letters[c(5,6)]
-letters[5:6]
-
-let <- c(1,3,5,7,9)
-letters[let]
 
 # Plotting ####
 
@@ -89,7 +70,6 @@ letters[let]
 plot(x=dat$Petal.Length, y=dat$Sepal.Length)
 plot(x=dat$Species, y=dat$Sepal.Length)
 
-t.test(x=dat$Sepal.Length,y=dat$Species)
 
 # Object "Classes" ####
 
@@ -107,8 +87,6 @@ str(dat)
 # Let's try
 nums <- c(1,1,2,2,2,2,3,3,3,4,4,4,4,4,4,4,5,6,7,8,9)
 class(nums) # make sure it's numeric
-length(nums)
-plot(nums)
 
 # convert to a factor
 as.factor(nums) # show in console
@@ -121,12 +99,13 @@ plot(nums_factor)
 # take note of how numeric vectors and factors behave differently in plot()
 
 # Let's modify and save these plots. Why not!?
-?plot
+?plot()
 plot(nums, main = "My Title", xlab = "My axis label", ylab = "My other axis label")
-plot(nums, main = "Nums", xlab = "X axis", ylab = "Y axis")
 
-jpeg("./exampleplot.jpeg")
-plot(nums, main = "Nums", xlab = "X axis", ylab = "Y axis")
+
+?jpeg()
+
+
 dev.off()
 
 
@@ -143,11 +122,10 @@ col3 = factor(c(1,2,3,4)) # see how we can designate something as a factor
 
 # here's the data frame command:
 data.frame(Clothes = col1, Numbers = col2, Factor_numbers = col3) # colname = vector, colname = vector....
-df1 <- data.frame(Clothes = col1, Numbers = col2, Factor_numbers = col3) # assign to df1
+df1 = data.frame(Clothes = col1, Numbers = col2, Factor_numbers = col3) # assign to df1
 df1 # look at it...note column names are what we gave it.
-df1
-dat
-iris
+
+
 
 
 # Practice subsetting ####
@@ -155,21 +133,12 @@ iris
 # Make a data frame from the first 20 rows of iris that has only Species and Sepal.Length columns
 # save it into an object called "dat3"
 
-Sepal.Length <- c(iris$Sepal.Length[1:20])
-Sepal.Length
 
-spp <- c("Species", "Sepal.Length")
-rows <- c(1:20)
-iris[rows,spp]
 
-iris[c(1:20),c("Species","Sepal.Length")]
 
-dat3 <- iris[rows,spp]
-rows
 
 # WRITING OUT FILES FROM R ####
 ?write.csv()
-write.csv(dat3,"./Eades_first_file.csv")
 
 
 # Write your new object "dat3" to a file named "LASTNAME_first_file.csv" in your PERSONAL git repository
@@ -194,27 +163,21 @@ for(i in levels(dat$Species)){
   print(mean(dat[dat$Species == i,"Sepal.Length"]))
 }
 
-?jpeg
+
 
 # YOUR REMAINING HOMEWORK ASSIGNMENT (Fill in with code) ####
 
 # 1.  Make a scatterplot of Sepal.Length vs Sepal.Width. See if you can get the points to be colored by "Species"
-plot(x=dat$Sepal.Width,y=dat$Sepal.Length,col=dat$Species)
+
 
 # 2.  Write the code to save it (with meaningful labels) as a jpeg file
-jpeg("./Assignment_3.jpeg")
-plot(x=dat$Sepal.Width,y=dat$Sepal.Length,col=dat$Species, main = "Sepal.Length vs. Sepal.Width", xlab = "Sepal.Width", ylab = "Sepal.Length")
-dev.off()
+
 
 # 3.  Subset the Iris data set to only include rows from the setosa and virginica Species
-colm <- c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species")
-rowz <- c(1:50,101:150)
-iris[rowz,colm]
-rowz
+
 
 # 4.  Write code to save this new subset as a .csv file called setosa_and_virginica.csv
-dat4 <- iris[rowz,colm]
-write.csv(dat4, "./setosa_and_virginica.csv")
+
 
 # 5.  Upload this R script (with all answers filled in and tasks completed) to canvas and GitHub
       # I should be able to run your R script and get all the plots created and saved, etc.

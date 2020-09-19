@@ -1,0 +1,21 @@
+1.
+read.csv() showed the first 90 lines of the indicated file. It literally reads the file into R and can be put into a data frame. It does so in the appropriate data format ie in a table. 
+
+2.
+read.csv2() has a format differential with what is used to separate data. With read.csv2(), it reads , within "" as a decimal. This causes the format of the table to be different.
+
+3.
+Having read.csv2() read commas within quotes as a decimal point is vitally important for people in Europe who use commas as decimals rather than separating numbers as we Americans do.
+
+4.
+St <- df$State
+as.character(St)
+
+5.
+summary(df$Home.Value)
+
+6.
+Home.Value
+
+7.
+when you add (…col=df$region) to the plot, it adds another separating factor. It separates the plotted data, with color, based on region. The points "west" will be one color and "South" will be a different color and so on.

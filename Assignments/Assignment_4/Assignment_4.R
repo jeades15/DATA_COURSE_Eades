@@ -34,5 +34,7 @@ boxplot(Latt ~ Eco, data = dft)
 class(dsft$Ecosystem)
 class(dsft$Lat)
 
+?png
 png(filename = "./silly_boxplot.png")
 dev.off()
+

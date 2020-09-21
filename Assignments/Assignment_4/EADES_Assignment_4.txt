@@ -9,7 +9,7 @@ Having read.csv2() read commas within quotes as a decimal point is vitally impor
 
 4.
 St <- df$State
-as.character(St)
+as.factor(St)
 
 5.
 summary(df$Home.Value)

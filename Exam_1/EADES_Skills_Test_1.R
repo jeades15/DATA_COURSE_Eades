@@ -60,11 +60,14 @@ col4 = c(".3386712", ".46628785", ".4443151", ".3568207", ".5319041", ".791449",
 dft <- data.frame(YEARS = col1, Ben_avg = col2, Katy_avg = col3, Diff = col4)
 min(dft$Diff)
 order(dft$Diff, decreasing = FALSE)
+# With the first row having the smallest difference and the column of years beginning with 2000, this shows 
+# that the year 2000 had the smallest difference between Ben and Katy.
+
 
 # 5
 
 dwnn <- DNA_Conc_by_Extraction_Date$Lab == "Downstairs"
-dwn <- DNA_Conc_by_Extraction_Date[dwn,]
+dwn <- DNA_Conc_by_Extraction_Date[dwnn,]
 jpeg(filename = "./Ben_DNA_over_time.jpg")
 plot(x = dwn$Date_Collected, y = dwn$DNA_Concentration_Ben, xlab = "Date_Collected", ylab = 
        "DNA_Concentration_Ben")

@@ -1,0 +1,8 @@
+1. Episcopal Church
+
+2. Negative Slope
+
+3. As the population grows, less of the population classifies themselves as Episcopalian
+
+4. If the axis had the same minimums and maximums then calculating the slope for each would not be necessary as one could just look for the steepest line.
+

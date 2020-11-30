@@ -1,0 +1,108 @@
+---
+title: "Assignment 9"
+author: "Joshua Eades"
+date: "11/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(modelr)
+library(GGally)
+library(lindia)
+library(skimr)
+library(patchwork)
+df <- read_csv("./../../Data/GradSchool_Admissions.csv")
+```
+
+## Gradaute School Admissions
+
+This is an evaluation of the data on graduate student admissions. First, we will determine what relationships in the data can be used to predict an applicant's chances on being admitted.
+We begin with a data frame (df) with the following names of columns.
+
+```{r,echo=FALSE}
+names(df)
+```
+
+Five different modules were made in order to find the best way to further analyze the data.
+
+```{r,echo=FALSE,message=FALSE}
+mod1 <- glm(data = df,
+            formula = admit ~ gpa)
+mod2 <- glm(data = df,
+            formula = admit ~ gre)
+mod3 <- glm(data = df,
+            formula = admit ~ rank)
+mod4 <- glm(data = df,
+            formula = admit ~ gpa * gre * rank)
+mod5 <- glm(data = df,
+            formula = admit ~ gpa + gre + rank)
+summary(mod1)
+summary(mod2)
+summary(mod3)
+summary(mod4)
+summary(mod5)
+```
+
+From the above information, the most information can be drawn from the fifth module. This makes sense as it takes into account every aspect of the student's application that we have. We will next make a new data frame (df_pred) adding the predictions that can be made with this module. Here is a list of the names of the columns in this data frame.
+
+```{r,echo=FALSE,message=FALSE}
+df_pred <- df %>% add_predictions(mod5)
+names(df_pred)
+```
+
+Notice the new column titled "pred". This is a prediction on a 0-1 scale on an applicant's chances at getting into their respective graduate program.
+
+Now, we can use graphs to further visualize and analyze the data
+
+### GPA's Impact
+
+```{r,message=FALSE, echo=FALSE}
+ggplot(df_pred,aes(x=gpa,y=pred)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(x="GPA",y="Prediction",title = "GPA's Affect on Admission")
+```
+
+This graph shows that the higher a student's GPA is, the better chance they have at getting into graduate school. 
+
+
+### Rank and GPA Impact
+
+If we separate data in the above graph based on the ranking of the undergraduate institutions, we see more information.
+
+```{r,echo=FALSE,message=FALSE}
+ggplot(df_pred,aes(x=gpa,y=pred,color=factor(rank))) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(x="GPA",y="Prediction",title = "GPA's Affect on Admission with Rank",color="Rank")
+```
+
+The better ranked their undergraduate program, the more likely they are to get in. Below is the raw data showing this prediction.
+
+```{r,echo=FALSE}
+summary(mod3)
+```
+
+The p-value is severely less than .05 indicating a significant relationship between admission and the ranking of the undergraduate program.
+
+### GRE Impact
+
+Next, we will run the same graph as above but showcasing GRE's impact on the students' chances at being admitted
+
+```{r}
+ggplot(df_pred,aes(x=gre,y=pred,color=factor(rank))) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(x="GRE",y="Prediction",title = "GRE's Affect on Admission",color="Rank")
+```
+
+Again, we can make the same conclusions that the higher one's GRE scores the better their chances at getting into their graduate program. We again see the same impact that rank of undergraduate instution had when looking at GPA applies here too.
+
+### Conclusions
+
+By analyzing the data above, we see that GPA, GRE, and the rank of undergraduate instituion all have affect on a student's chance of getting admitted to their graduate program. The higher one's GRE, GPA, and undergraduate instition ranking, the higher their chances of getting into their program.

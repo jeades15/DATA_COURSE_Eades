@@ -1,0 +1,16 @@
+# A tibble: 4,644 x 16
+   FedID UnivName State Tier  AvgFullProfComp AvgAssocProfComp AvgAssistProfCo… AvgProfCompAll
+   <dbl> <chr>    <chr> <chr>           <dbl>            <dbl>            <dbl>          <dbl>
+ 1  1061 Alaska … AK    IIB               567              485              471            487
+ 2  1063 Univ.Al… AK    I                 914              753              572            677
+ 3  1065 Univ.Al… AK    IIA               716              663              442            559
+ 4 11462 Univ.Al… AK    IIA               825              681              557            670
+ 5  1002 Alabama… AL    IIA               530              444              376            423
+ 6  1004 Univers… AL    IIA               542              473              383            477
+ 7  1008 Athens … AL    IIB               558              476              427            478
+ 8  1009 Auburn … AL    I                 692              527              451            546
+ 9  1012 Birming… AL    IIB               655              501              404            523
+10  1016 Univ. o… AL    IIB               607              508              445            503
+# … with 4,634 more rows, and 8 more variables: NumFullProfs <dbl>, NumAssocProfs <dbl>,
+#   NumAssistProfs <dbl>, NumInstructors <dbl>, NumFacultyAll <dbl>, Rank <chr>, Salary <dbl>,
+#   ProfType <chr>

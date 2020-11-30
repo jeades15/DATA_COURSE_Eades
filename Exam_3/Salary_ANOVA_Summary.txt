@@ -1,0 +1,8 @@
+              Df   Sum Sq Mean Sq F value Pr(>F)    
+State         51  8278562  162325   44.72 <2e-16 ***
+Tier           2 10195677 5097839 1404.43 <2e-16 ***
+ProfType       3 16568823 5522941 1521.55 <2e-16 ***
+Residuals   4459 16185344    3630                   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+128 observations deleted due to missingness

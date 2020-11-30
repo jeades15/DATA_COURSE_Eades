@@ -1,0 +1,94 @@
+---
+title: "Eades Exam 3"
+author: "Joshua Eades"
+date: "11/30/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(modelr)
+library(janitor)
+library(broom)
+FS <- read_csv("./../Data/FacultySalaries_1995.csv")
+df3 <- read_csv("./../Data/Juniper_Oils.csv")
+Full <- FS %>% select(c(1:4,9:17),contains("AvgFull")) %>% 
+  pivot_longer(ends_with("FullProfSalary"),
+               names_to="Rank",values_to="Salary",
+               names_prefix="AvgFull") %>% 
+  mutate(ProfType="Full")
+
+Associate <- FS %>% select(c(1:4,9:17),contains("AvgAssoc")) %>% 
+  pivot_longer(ends_with("AssocProfSalary"),
+               names_to="Rank",values_to="Salary",
+               names_prefix="AvgAssoc") %>% 
+  mutate(ProfType="Associate")
+
+Assistant <- FS %>% select(c(1:4,9:17),contains("AvgAssist")) %>% 
+  pivot_longer(ends_with("AssistProfSalary"),
+               names_to="Rank",values_to="Salary",
+               names_prefix="AvgAssist") %>% 
+  mutate(ProfType="Assistant")
+
+All <- FS %>% select(c(1:4,9:17),contains(c("All"))) %>% 
+  pivot_longer(cols = ends_with("ryAll"),
+               names_to="Rank",values_to="Salary",
+               names_prefix="AvgProf") %>% 
+  mutate(ProfType="All")
+
+full2 <- rbind(Full,Associate,Assistant,All)
+```
+
+### Numbers 1 and 2
+After loading the "FacultySalaries_1995.csv" file, I cleaned the data frame and saved it as a new data frame called "full2". 
+
+```{r,echo=FALSE, message=FALSE}
+mod1 <- aov(data = full2,
+            formula = Salary ~ State + Tier + Rank)
+
+summary(mod1)
+```
+
+Above, we see the interaction of State, Tier, and Rank on Salary. Each, individually, has a significant influence on the salary of these employees. This table is saved as a file in this directory as "Salary_ANOVA_Summary.txt". 
+
+### Numbers 3 and 4
+
+First, I input the "Juniper_Oils.csv" file into my report as "df3". I cleaned up the data frame and saved is as a new data frame called "df4".
+
+```{r,include=FALSE}
+df3 <- read_csv("./../Data/Juniper_Oils.csv")
+
+df4 <-df3 %>% 
+  pivot_longer(contains(c("alpha-pinene","para-cymene","alpha-terpineol",
+  "cedr-9-ene","alpha-cedrene","beta-cedrene","cis-thujopsene","alpha-himachalene",
+  "beta-chamigrene","cuparene","compound 1","alpha-chamigrene","widdrol","cedrol",
+  "beta-acorenol","alpha-acorenol","gamma-eudesmol","beta-eudesmol","alpha-eudesmol",
+  "cedr-8-en-13-ol","cedr-8-en-15-ol","compound 2","thujopsenal")),
+  names_to="Chemical_ID",
+  values_to="Concentration")
+```
+
+Below is a figure of the graph "Concentration vs YearsSinceBurn". 
+
+```{r,echo=FALSE,message=FALSE}
+fig2 <- ggplot(df4,aes(x=YearsSinceBurn,y=Concentration)) +
+  geom_smooth() +
+  facet_wrap(~Chemical_ID,scales = "free_y") +
+  theme_minimal()
+fig2
+```
+
+What this shows us is the impact that the years since the time of the burn has on the concentration of these chemicals.
+
+### Number 5
+
+```{r,echo=FALSE,message=FALSE}
+mod2 <- glm(data = df4,
+            formula = Concentration ~ Chemical_ID + YearsSinceBurn)
+
+mod2t <- mod2 %>% tidy()
+mod2t
+```
+
+Above, we see a tidied version of the glm model with the formula: Concentration ~ Chemical_ID + YearsSinceBurn. When tidied, it still contained p-values > .05 and I was not sure how to change this. We are still seeing those chemical concentrations that are most influenced by YearsSinceBurn.

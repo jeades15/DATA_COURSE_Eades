@@ -32,10 +32,24 @@ All <- FS %>% select(c(1:4,9:17),contains(c("All"))) %>%
   mutate(ProfType="All")
 
 full2 <- rbind(Full,Associate,Assistant,All)
+full3 <- rbind(Full,Associate,Assistant)
+view(full3)
+full4 <- full3 %>% filter(Tier==c("I","IIA","IIB"))
 
-sink("./Cleaned_FacultySalaries_1995.csv")
-full2
-sink(NULL)
+p1<- ggplot(full4, aes(x=ProfType,y=Salary,fill=ProfType)) +
+  geom_boxplot() +
+  facet_wrap(~Tier) +
+  theme_minimal() +
+  labs(x="Rank",fill="Rank")
+p1
+
+jpeg("./Eades_Fig_1.jpg")
+p1
+dev.off()
+
+?geom_boxplot
+?stat_boxplot
+
 
 str(Full)
 str(FS)
@@ -90,6 +104,9 @@ fig2 <- ggplot(df4,aes(x=YearsSinceBurn,y=Concentration)) +
   theme_minimal()
 fig2
 
+png(filename = "./Eades_Fig2.png")
+fig2
+dev.off()
 
 # 5
 
@@ -100,7 +117,4 @@ summary(mod2)
 mod2t <- mod2 %>% tidy()
 view(mod2t)
 
-?tidy()
 
-glm(data = df4,
-    formula = Chemical_ID * YearsSinceBurn)

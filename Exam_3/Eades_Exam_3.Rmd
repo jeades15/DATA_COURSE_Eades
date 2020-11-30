@@ -2,7 +2,9 @@
 title: "Eades Exam 3"
 author: "Joshua Eades"
 date: "11/30/2020"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -42,6 +44,19 @@ full2 <- rbind(Full,Associate,Assistant,All)
 
 ### Numbers 1 and 2
 After loading the "FacultySalaries_1995.csv" file, I cleaned the data frame and saved it as a new data frame called "full2". 
+
+```{r,echo=FALSE,message=FALSE}
+full3 <- rbind(Full,Associate,Assistant)
+full4 <- full3 %>% filter(Tier==c("I","IIA","IIB"))
+p1<- ggplot(full4, aes(x=ProfType,y=Salary,fill=ProfType)) +
+  geom_boxplot() +
+  facet_wrap(~Tier) +
+  theme_minimal() +
+  labs(x="Rank",fill="Rank")
+p1
+```
+
+The above figure is facet wrapped by tier of university and shows Salary dependent on Type of Faculty. I could not figure out how to include some of the non-finite values.
 
 ```{r,echo=FALSE, message=FALSE}
 mod1 <- aov(data = full2,

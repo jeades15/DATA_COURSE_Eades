@@ -1,0 +1,4 @@
+In order, original, automatic, max200
+[1] 335
+[1] 245
+[1] 175

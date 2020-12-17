@@ -1,0 +1,93 @@
+---
+title: "Eades Final Project"
+author: "Joshua Eades"
+date: "12/14/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(kableExtra)
+
+FieldTot <- read_csv("./Data/Field_Total.csv")
+FieldG <- read_csv("./Data/Field_Games.csv")
+BatTot <- read_csv("./Data/Batting_Total.csv")
+BatG <- read_csv("./Data/Batting_Games.csv")
+Allyear <- read_csv("./Data/Years_Combined.csv")
+df1 <- read_csv("./Data/Year_Averages.csv")
+
+```
+
+#### Previous script cleaned the data. 
+Can be found at "./R/Eades_Final_Clean.R"
+
+##### Details
+My original question was "Does a player's batting average affect their performance in the field, specifically their fielding percentage?" I will first show you the analyses for this question. After which, I will run additional models on statistics that to see what is the most significant relationship. More details to come.
+
+### The First Data Set
+This first data set, df1, is comprised of three varilables and eleven observations. These three variables include each unique year (2010-2020), the overall average batting average for each year, and the overall average fielding percentage for each year.
+
+### Visualizing
+
+This plot is very informative to answering my question that sparked this project.
+```{r,echo=FALSE,warning=FALSE}
+p3 <- readRDS("./Output/Fig4.RDS")
+plot(p3)
+```
+
+I was predicting that these graphs would look similar to each other, meaning as one increased so would the other. But as you can see, they are almost exactly opposite of each other. Even with this seemingly negative relationship, models show that the impact they have on each other is not significant.
+
+```{r,echo=FALSE}
+mod1 <- aov(data = df1,
+          formula = AvgFldpct ~ AvgBA)
+summary(mod1)
+```
+
+My conclusion for my original question is that batting average and fielding percentage in Major League Baseball do not influence each other, as the p-value is greater than .05.
+
+
+# Now to Evaluate other models
+
+### Next Data Set
+In order to gain the most accurate results, I need to include only players who have played enough games to impact their data. I chose 90 games which still gives me a huge data frame to work with. FieldG is a data frame that includes all players who played 90 or more games in the years 2010-2010 and all of their fielding data. BatG is the same but for player's batting data.
+
+### Visualizing MLB Data
+##### I became curious as to what factors weigh most on determing fielding percentage and batting average.
+
+This plot shows that the fewer errors a player has in the field, their fielding percentage goes up drastically. This is greatly expected as the primary reason for a fielding percentage to drop is errors.
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+p1 <- readRDS("./Output/Fig1.RDS")
+ggplotly(p1)
+```
+
+This plot shows that the more home runs a player hits in a season, the higher their batting average is. The surety that these have a relationship on each other is less sure than the graph above.
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+p2 <- readRDS("./Output/Fig2.RDS")
+ggplotly(p2)
+```
+
+**This first model** shows that fielding percentage as a function of errors made is extremely significant with a p-value of 2.0e-16.
+```{r,echo=FALSE}
+mod2 <- aov(data = FieldG,
+            formula = Fldpct ~ E)
+summary(mod2)
+```
+
+**This second model** shows that the batting average as a function of home runs hit is also extremely significant with a p-value of 2.0e-16.
+```{r,echo=FALSE}
+mod3 <- aov(data = BatG,
+            formula = BA ~ HR)
+summary(mod3)
+```
+
+#### Interpret
+
+By looking at the p-values, it can be interpretted that these two models are almost identical. The influence that errors have on a player's fielding percentage is the same significance as the amount of home runs a player hits has on their batting average.
+
+#### Conclusion
+
+In conclusion, I regret to inform that batting average and fielding percentage do not have any impact on each other. Through modeling, I was able to find two very important factors to determining a player's batting average and fielding percentage, home runs and errors, respectively. 
